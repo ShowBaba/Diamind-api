@@ -11,5 +11,11 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "linebreak-style": "off",
+        "consistent-return": "off",
+        "no-underscore-dangle":"off",
+        "no-param-reassign":"off",
+        "no-unused-vars":"warn",
+        "comma-dangle": "off"
     }
 }

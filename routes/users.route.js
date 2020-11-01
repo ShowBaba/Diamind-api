@@ -1,87 +1,64 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-multiple-empty-lines */
 /* eslint-disable no-shadow */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
 const express = require('express');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const User = require('../models/user.model');
+const models = require('../models');
+const { hashPassword, jwtToken, comparePassword } = require('../utils');
+const validateAuth = require('../middlewares/auth');
+// const userController = require('../controllers/auth.controller');
 
 const router = express.Router();
-const authenticate = require('../authenticate');
+const { User } = models;
 
-const userRouter = express.Router();
+// router.post('/signup', userController.signup);
 
-router.use(bodyParser.json());
-
-userRouter.route('/').get(authenticate.varifyAdmin, (req, res, next) => {
-  User.find({})
-    .then(
-      (users) => {
+router.route('/signup').post(validateAuth, (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const hash = hashPassword(password);
+    User.create({ email, password: hash }).then(
+      (user_) => {
+        const { id } = user_;
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({
-          data: users,
+          message: 'User created',
+          user: { id, email },
         });
       },
-      (err) => next(err),
-    )
-    .catch((err) => next(err));
+      (err) => next(err)
+    );
+  } catch (error) {
+    next(error);
+  }
 });
 
-userRouter.route('/signup').post((req, res) => {
-  User.register(
-    new User({
-      username: req.body.username,
-      email: req.body.email,
-    }),
-    req.body.password,
-    (err, user) => {
-      if (err) {
-        res.statusCode = 500;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({ err });
-      } else {
-        user.save((err, user) => {
-          if (err) {
-            res.statusCode = 500;
-            res.setHeader('Content-Type', 'application/json');
-            res.json({ err });
-            return;
-          }
-          passport.authenticate('local')(req, res, () => {
+router.route('/signin').post((req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    User.findOne({
+      where: { email },
+    })
+      .then(
+        (user) => {
+          if (user && comparePassword(password, user.password)) {
+            const token = jwtToken.createToken(user);
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({
-              success: true,
-              status: 'Registration Successful!',
+              message: 'Login Succesfully',
+              token,
             });
-          });
-        });
-      }
-    },
-  );
+          } else {
+            res.statusCode = 400;
+            res.send('Invalide Email/Password');
+          }
+        },
+        (err) => next(err)
+      )
+      .catch((err) => next(err));
+  } catch (error) {
+    next(error);
+  }
 });
 
-userRouter
-  .route('/login')
-  .post(passport.authenticate('local'), (req, res, next) => {
-    // create a token
-    const token = authenticate.getToken({ _id: req.user._id });
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json({
-      success: true,
-      token,
-      status: 'Login Successful!',
-    });
-  });
-
-userRouter.route('/logout').get((req, res, next) => {
-  delete req.session;
-  req.logOut();
-  return res.redirect('/');
-});
-
-module.exports = userRouter;
+module.exports = router;

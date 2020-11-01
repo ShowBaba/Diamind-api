@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -7,11 +8,11 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const config = require('./config/db.config');
+const config = require('./config/config');
 
 dotenv.config();
 
-const indexRouter = require('./routes/index');
+// const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users.route');
 const entriesRouter = require('./routes/entries.route');
 
@@ -32,45 +33,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corsOptions));
 app.use(passport.initialize());
 
-app.get('*', (req, res) => {
-  res.redirect('/api/v1');
+app.get('/api/v1', (req, res) => {
+  // res.redirect('/api/v1');
+  res.json({ status: 'success', message: 'Welcome To MyDiary API' });
 });
 
 app.get('/entries', (req, res) => {
   res.redirect('/api/v1/entries');
 });
 
-// app.get('*', (req, res) => {
-//   res.redirect('/api/v1');
-// });
-
-app.use('/api/v1/', indexRouter);
+// app.use('/api/v1/', indexRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/entries', entriesRouter);
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-const localUrl = config.mongoUrl;
-// eslint-disable-next-line no-unused-vars
-const liveUrl = process.env.DB_CONNECTION;
-// replace liveUrl with localUrl to use local mongodb
-const connect = mongoose.connect(localUrl, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
+// set up a wildcard route
+app.get('*', (req, res) => {
+  res.redirect('/api/v1');
 });
 
-// establish connection
-connect.then(
-  // eslint-disable-next-line no-unused-vars
-  (db) => {
-    console.log('Connected to Database');
-  },
-  (err) => {
-    console.log(err);
-  },
-);
+app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

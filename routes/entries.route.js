@@ -1,12 +1,10 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable consistent-return */
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
-/* eslint-disable no-underscore-dangle */
 const express = require('express');
 const bodyParser = require('body-parser');
-const authenticate = require('../authenticate');
-const Entries = require('../models/entry.model');
+const models = require('../models');
+
+const { Entry } = models;
+const authorize = require('../middlewares/authorization');
 
 const entryRouter = express.Router();
 
@@ -14,96 +12,124 @@ entryRouter.use(bodyParser.json());
 
 entryRouter
   .route('/')
-  .get(authenticate.varifyUser, (req, res, next) => {
-    Entries.find({
-      user: {
-        _id: req.user._id,
-      },
+  .get(authorize, (req, res, next) => {
+    const { id } = req.decoded;
+    Entry.findAll({
+      where: {
+        userId: id,
+      }
     })
       .then(
         (entries) => {
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.json(entries);
+          res.json({
+            message: 'Diary Entries',
+            entries
+            ,
+          });
         },
-        (err) => next(err),
+        (err) => next(err)
       )
       .catch((err) => next(err));
-  })
-  .post(authenticate.varifyUser, (req, res, next) => {
-    req.body.user = req.user._id;
-    Entries.create(req.body)
+  }
+  )
+  .post(authorize, (req, res, next) => {
+    const { id } = req.decoded;
+    const { content } = req.body;
+    Entry.create({ content, userId: id })
       .then(
         (entry) => {
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.json(entry);
+          res.json({
+            message: 'Created a new entry',
+            data: entry,
+          });
         },
-        (err) => next(err),
+        (err) => next(err)
       )
       .catch((err) => next(err));
   })
-  .put(authenticate.varifyUser, (req, res) => {
+  .put((req, res) => {
     res.statusCode = 403; // operation not supported
     res.end('PUT operation not supported on /entries use /entries/:id instead');
   })
-  .delete(authenticate.varifyUser, (req, res, next) => {
-    Entries.deleteMany({
-      user: {
-        _id: req.user._id,
-      },
+  .delete(authorize, (req, res, next) => {
+    const { id } = req.decoded;
+    Entry.destroy({
+      where: {
+        userId: id,
+      }
     })
       .then(
         (response) => {
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.json(response);
+          res.json({
+            message: 'Entries Deleted',
+            response,
+          });
         },
-        (err) => next(err),
+        (err) => next(err)
       )
       .catch((err) => next(err));
   });
 
 entryRouter
   .route('/:id')
-  .get(authenticate.varifyUser, (req, res, next) => {
-    Entries.findById(req.params.id)
+  .get(authorize, (req, res, next) => {
+    const { id } = req.decoded;
+    Entry.findByPk(req.params.id)
       .then(
         (entry) => {
-          if (req.user._id.equals(entry.user)) {
+          if (!entry) {
+            res.statusCode = 400;
+            res.end('Resource not found');
+          }
+          if (id === entry.userId) {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            res.json(entry);
+            res.json({
+              message: 'Entry',
+              data: entry,
+            });
           } else {
-            res.statusCode = 403;
-            res.end('You are not authorized to perform this operation');
+            res.statusCode = 401;
+            res.end('You are not authorized to access this resource');
           }
         },
-        (err) => next(err),
+        (err) => next(err)
       )
       .catch((err) => next(err));
   })
-  .post(authenticate.varifyUser, (req, res) => {
+  .post((req, res) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /entries/${req.params.id}`);
   })
-  .put(authenticate.varifyUser, (req, res, next) => {
-    Entries.findById(req.params.id)
+  .put(authorize, (req, res, next) => {
+    const { id } = req.decoded;
+    Entry.findByPk(req.params.id)
       .then(
         (entry) => {
-          if (req.user._id.equals(entry.user)) {
-            Entries.findByIdAndUpdate(
-              req.params.id,
-              { $set: req.id },
-              { new: true },
+          if (!entry) {
+            res.statusCode = 400;
+            res.end('Resource not found');
+          } else if (id === entry.userId) {
+            entry.update(
+              { content: req.body.content },
+              { where: { id: req.params.id } }
             )
               .then(
-                (post) => {
+                (entry) => {
                   res.statusCode = 200;
                   res.setHeader('Content-Type', 'application/json');
-                  res.json(post);
+                  res.json({
+                    message: 'Entry Updated',
+                    entry
+                  });
                 },
-                (err) => next(err),
+                (err) => next(err)
               )
               .catch((err) => next(err));
           } else {
@@ -111,23 +137,34 @@ entryRouter
             res.end('You are not authorized to perform this operation');
           }
         },
-        (err) => next(err),
+        (err) => next(err)
       )
       .catch((err) => next(err));
   })
-  .delete(authenticate.varifyUser, (req, res, next) => {
-    Entries.findById(req.params.id)
+  .delete(authorize, (req, res, next) => {
+    const { id } = req.decoded;
+    Entry.findByPk(req.params.id)
       .then(
         (entry) => {
-          if (req.user._id.equals(entry.user)) {
-            Entries.findByIdAndRemove(req.params.id)
+          if (!entry) {
+            res.statusCode = 400;
+            res.end('Resource not found');
+          } else if (id === entry.userId) {
+            Entry.destroy({
+              where: {
+                id: req.params.id,
+              }
+            })
               .then(
                 (response) => {
                   res.statusCode = 200;
                   res.setHeader('Content-Type', 'application/json');
-                  res.json(response);
+                  res.json({
+                    message: 'Entry Deleted',
+                    response,
+                  });
                 },
-                (err) => next(err),
+                (err) => next(err)
               )
               .catch((err) => next(err));
           } else {
@@ -135,7 +172,7 @@ entryRouter
             res.end('You are not authorized to perform this operation');
           }
         },
-        (err) => next(err),
+        (err) => next(err)
       )
       .catch((err) => next(err));
   });

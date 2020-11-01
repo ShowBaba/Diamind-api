@@ -1,7 +1,7 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable new-cap */
+// /* eslint-disable linebreak-style */
+// /* eslint-disable implicit-arrow-linebreak */
+// /* eslint-disable no-underscore-dangle */
+// /* eslint-disable new-cap */
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -16,8 +16,7 @@ exports.local = passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-exports.getToken = (user) =>
-  jwt.sign(user, process.env.secretKey, { expiresIn: 3600 });
+exports.getToken = (user) => jwt.sign(user, process.env.secretKey, { expiresIn: 3600 });
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
