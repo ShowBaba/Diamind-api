@@ -18,13 +18,12 @@ module.exports = {
     logging: false,
   },
   production: {
-    username: 'azexyfxsggkgas',
-    password: process.env.PROD_PASSWORD,
-    database: 'd64a0jrdnu1ckf',
+    username: 'me',
+    password: 'password',
+    database: 'mydiary-prod',
     use_env_variables: 'DATABASE_URL',
-    host: 'ec2-35-168-77-215.compute-1.amazonaws.com',
     dialect: 'postgres',
-    operatorsAliases: false,
     logging: false,
+    host: 'localhost',
   },
 };
