@@ -18,12 +18,6 @@ module.exports = {
     logging: false,
   },
   production: {
-    username: 'me',
-    password: 'password',
-    database: 'mydiary-prod',
-    use_env_variables: 'DATABASE_URL',
-    dialect: 'postgres',
-    logging: false,
-    host: 'localhost',
+    use_env_variable: 'DATABASE_URL'
   },
 };
