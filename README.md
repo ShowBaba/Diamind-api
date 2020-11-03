@@ -1,5 +1,5 @@
 <a href="" target="_blank"><p align="center">
-  <img src="public/images/write.png" alt="MyDiary App logo">
+  <img src="public/images/write_64.png" alt="MyDiary App logo">
 </p></a>
 <h2 align="center">⭐ MyDiary App API⭐</h2>
 <h4 align="center">MyDiary is an online journal where users can pen down their thoughts and feelings.</h4>
