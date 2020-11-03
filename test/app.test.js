@@ -3,12 +3,9 @@ const { expect } = require('chai');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../app');
-const models = require('../models');
-const Entry = require('../models/entry');
-// run np migrate --env test to migrate to test db
+const { User } = require('../db/models');
 
-const { User } = models;
-
+// eslint-disable-next-line no-unused-vars
 const should = chai.should();
 let token;
 let id;
@@ -133,6 +130,7 @@ describe('/GET api/v1/entries/', () => {
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
         expect(res).to.have.status(200);
+        // TODO: complete the test body;
         // expect(res.body.data).to.have.property('userId');
         // expect(res.body.message).to.equals('Entry');
         // expect(res.body.data.content).to.be.a('string').to.not.be.a('null');

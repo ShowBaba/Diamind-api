@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
-const { User } = require('../models');
+const { User } = require('../db/models');
 
 module.exports = (req, res, next) => {
   const { email, password } = req.body;

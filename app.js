@@ -8,13 +8,11 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const config = require('./config/config');
+const config = require('./db/config/config');
 
 dotenv.config();
 
-// const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users.route');
-const entriesRouter = require('./routes/entries.route');
+const router = require('./routes/index');
 
 const app = express();
 const corsOptions = {
@@ -33,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corsOptions));
 app.use(passport.initialize());
 
+// TODO: add home route here;
 app.get('/api/v1', (req, res) => {
   // res.redirect('/api/v1');
   res.json({ status: 'success', message: 'Welcome To MyDiary API' });
@@ -43,8 +42,8 @@ app.get('/entries', (req, res) => {
 });
 
 // app.use('/api/v1/', indexRouter);
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/entries', entriesRouter);
+app.use('/api/v1/users', router.usersRoute);
+app.use('/api/v1/entries', router.entriesRoute);
 
 // set up a wildcard route
 app.get('*', (req, res) => {

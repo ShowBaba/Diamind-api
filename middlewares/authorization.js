@@ -1,15 +1,18 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const {
-  checkInBlacklist
-} = require('../utils');
-const {
-  hashPassword, jwtToken, comparePassword
-} = require('../utils');
 
-const { User } = require('../models');
+const { User } = require('../db/models');
+
+const { tokenBlacklist } = require('../db/models');
 
 dotenv.config();
+
+// check if a token is in the black list db
+const checkInBlacklist = (token) => tokenBlacklist.findOne({
+  where: { token }
+})
+  // eslint-disable-next-line no-shadow
+  .then((token) => token);
 
 module.exports = (req, res, next) => {
   if (!req.headers.authorization) {
@@ -18,7 +21,7 @@ module.exports = (req, res, next) => {
     });
   }
   const token = req.headers.authorization.split(' ')[1];
-  jwtToken.inList(token).then((result) => {
+  checkInBlacklist(token).then((result) => {
     // console.log(result)
     if (result === null) {
       jwt.verify(token, process.env.secretKey, { expiresIn: 3600 },
@@ -39,8 +42,7 @@ module.exports = (req, res, next) => {
               next();
             });
         });
-    }
-    else {
+    } else {
       return res.status(401).send({
         error: 'User already logged out of session'
       });
