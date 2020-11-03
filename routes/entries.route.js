@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable no-shadow */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -25,31 +26,47 @@ entryRouter
           res.setHeader('Content-Type', 'application/json');
           res.json({
             message: 'Diary Entries',
-            entries
-            ,
+            entries,
           });
         },
         (err) => next(err)
       )
       .catch((err) => next(err));
-  }
-  )
+  })
   .post(authorize, (req, res, next) => {
     const { id } = req.decoded;
-    const { content } = req.body;
-    Entry.create({ content, userId: id })
-      .then(
-        (entry) => {
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json');
-          res.json({
-            message: 'Created a new entry',
-            data: entry,
-          });
-        },
-        (err) => next(err)
-      )
-      .catch((err) => next(err));
+    if (Array.isArray(req.body)) {
+      // eslint-disable-next-line no-return-assign
+      req.body.forEach(obj => obj.userId = id);
+      Entry.bulkCreate(req.body)
+        .then(
+          (entry) => {
+            res.statusCode = 200;
+            // res.setHeader('Content-Type', 'application/json');
+            res.json({
+              message: 'Created new entries',
+              data: entry,
+            });
+          },
+          (err) => next(err)
+        )
+        .catch((err) => next(err));
+    } else {
+      req.body.userId = id;
+      Entry.create(req.body)
+        .then(
+          (entry) => {
+            res.statusCode = 200;
+            // res.setHeader('Content-Type', 'application/json');
+            res.json({
+              message: 'Created a new entry',
+              data: entry,
+            });
+          },
+          (err) => next(err)
+        )
+        .catch((err) => next(err));
+    }
   })
   .put((req, res) => {
     res.statusCode = 403; // operation not supported
@@ -126,7 +143,7 @@ entryRouter
                   res.setHeader('Content-Type', 'application/json');
                   res.json({
                     message: 'Entry Updated',
-                    entry
+                    data: entry
                   });
                 },
                 (err) => next(err)

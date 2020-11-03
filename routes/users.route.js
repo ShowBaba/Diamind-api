@@ -2,12 +2,15 @@
 /* eslint-disable no-shadow */
 const express = require('express');
 const models = require('../models');
-const { hashPassword, jwtToken, comparePassword } = require('../utils');
+const {
+  hashPassword, jwtToken, comparePassword
+} = require('../utils');
 const validateAuth = require('../middlewares/auth');
 // const userController = require('../controllers/auth.controller');
 
 const router = express.Router();
 const { User } = models;
+const { tokenBlacklist } = models;
 
 // router.post('/signup', userController.signup);
 
@@ -21,7 +24,8 @@ router.route('/signup').post(validateAuth, (req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({
-          message: 'User created',
+          success: true,
+          message: 'Registration Successful!',
           user: { id, email },
         });
       },
@@ -45,6 +49,7 @@ router.route('/signin').post((req, res, next) => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({
+              success: true,
               message: 'Login Succesfully',
               token,
             });
@@ -61,4 +66,19 @@ router.route('/signin').post((req, res, next) => {
   }
 });
 
+router.route('/logout')
+  .get((req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      tokenBlacklist.create({ token })
+        .then(() => {
+          res.json({
+            status: 'success',
+            message: 'User signed out',
+          });
+        });
+    } catch (error) {
+      next(error);
+    }
+  });
 module.exports = router;
