@@ -4,7 +4,6 @@
 <h2 align="center">⭐ MyDiary App API⭐</h2>
 <h4 align="center">MyDiary is an online journal where users can pen down their thoughts and feelings.</h4>
 <br>
-<div align="center">
 
 ## Stack Overview
 
