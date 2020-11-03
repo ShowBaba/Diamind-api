@@ -1,0 +1,35 @@
+POST http://localhost:3000/api/v1/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "client",
+  "password": "12345"
+}
+
+###
+
+POST http://localhost:3000/api/v1/entries HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkyODQ0MmZlZDQ1ZjMyMTRhZjY0MjMiLCJpYXQiOjE2MDM4OTI0MDMsImV4cCI6MTYwMzg5NjAwM30.sdXr1GUX5lyJf1C8c3qIZyjEv3zzj4ok0yBvuMs_-A0
+
+{
+  "content": "Entry by Client0"
+}
+
+###
+
+GET http://localhost:3000/api/v1/entries HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkyODQ0MmZlZDQ1ZjMyMTRhZjY0MjMiLCJpYXQiOjE2MDM4OTI0MDMsImV4cCI6MTYwMzg5NjAwM30.sdXr1GUX5lyJf1C8c3qIZyjEv3zzj4ok0yBvuMs_-A0
+
+###
+
+GET http://localhost:3000/api/v1/entries/5f9976895fd3b00640ad04ea HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkyODQ0MmZlZDQ1ZjMyMTRhZjY0MjMiLCJpYXQiOjE2MDM4OTI0MDMsImV4cCI6MTYwMzg5NjAwM30.sdXr1GUX5lyJf1C8c3qIZyjEv3zzj4ok0yBvuMs_-A0
+
+###
+
+DELETE http://localhost:3000/api/v1/entries/5f9976895fd3b00640ad04ea HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkyODQ0MmZlZDQ1ZjMyMTRhZjY0MjMiLCJpYXQiOjE2MDM4OTI0MDMsImV4cCI6MTYwMzg5NjAwM30.sdXr1GUX5lyJf1C8c3qIZyjEv3zzj4ok0yBvuMs_-A0
