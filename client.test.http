@@ -1,16 +1,16 @@
-POST http://localhost:3000/api/v1/users/login HTTP/1.1
+POST https://mydiaryprojectapi.herokuapp.com/api/v1/users/signup HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "client",
+  "email": "client@mail.com",
   "password": "12345"
 }
 
 ###
 
-POST http://localhost:3000/api/v1/entries HTTP/1.1
+POST https://mydiaryprojectapi.herokuapp.com/api/v1/entries HTTP/1.1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkyODQ0MmZlZDQ1ZjMyMTRhZjY0MjMiLCJpYXQiOjE2MDM4OTI0MDMsImV4cCI6MTYwMzg5NjAwM30.sdXr1GUX5lyJf1C8c3qIZyjEv3zzj4ok0yBvuMs_-A0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0aW5nMkBtYWlsLmNvbSIsImlhdCI6MTYwNDQyNTYyNSwiZXhwIjoxNjA0NDI5MjI1fQ.-ol_AMBwpnubQSNgrnQk8fQ4SX74EWvBhKtniQPHoTQ
 
 {
   "content": "Entry by Client0"
@@ -18,9 +18,19 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkyODQ0M
 
 ###
 
-GET http://localhost:3000/api/v1/entries HTTP/1.1
+POST https://mydiaryprojectapi.herokuapp.com/api/v1/entries HTTP/1.1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkyODQ0MmZlZDQ1ZjMyMTRhZjY0MjMiLCJpYXQiOjE2MDM4OTI0MDMsImV4cCI6MTYwMzg5NjAwM30.sdXr1GUX5lyJf1C8c3qIZyjEv3zzj4ok0yBvuMs_-A0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0aW5nQG1haWwuY29tIiwiaWF0IjoxNjA0NDI1NTE5LCJleHAiOjE2MDQ0MjkxMTl9.y3EYCPDvXCQgdIlkjvWbIwOWrwn4NOJtmF3fIjsBIjU
+
+{
+  "content": "Entry by Client0"
+}
+
+###
+
+GET https://mydiaryprojectapi.herokuapp.com/api/v1/entries HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0aW5nMkBtYWlsLmNvbSIsImlhdCI6MTYwNDQyNTYyNSwiZXhwIjoxNjA0NDI5MjI1fQ.-ol_AMBwpnubQSNgrnQk8fQ4SX74EWvBhKtniQPHoTQ
 
 ###
 
