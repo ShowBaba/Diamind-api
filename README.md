@@ -17,7 +17,5 @@
 
 
 ## API Documentation
-<h3 align="center">DOCUMENTATION COMING SOON!</h3>
-
-<!-- Here's the link to the [documentation](). -->
+Here's the link to the [documentation](http://bit.ly/mydiaryapidoc).
 
