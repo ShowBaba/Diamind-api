@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
   Entry.init({
     content: DataTypes.STRING,
     userId: DataTypes.INTEGER,
-    date: DataTypes.DATEONLY,
+    date: {
+      type: DataTypes.DATEONLY,
+      defaultValue: sequelize.fn('NOW')
+    }
   }, {
     sequelize,
     modelName: 'Entry',
