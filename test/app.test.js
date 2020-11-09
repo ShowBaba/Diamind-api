@@ -49,7 +49,7 @@ describe('Users', () => {
         .post('/api/v1/users/signup')
         .send(user)
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res).to.have.status(201);
           expect(res.body.success).to.equals(true);
           expect(res.body.message).to.equals('Registration Successful!');
           done();
@@ -83,9 +83,10 @@ describe('/POST api/v1/entries', () => {
     const entry = [
       {
         content: 'Test entry 1',
+        date: '2020-11-09'
       },
       {
-        content: 'Test entry 2',
+        content: 'Test entry without date',
       },
     ];
     chai
@@ -94,10 +95,11 @@ describe('/POST api/v1/entries', () => {
       .set('Authorization', `Bearer ${token}`)
       .send(entry)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(201);
         expect(res.body.data[0]).to.have.property('userId');
         expect(res.body.message).to.equals('Created new entries');
         expect(res.body.data[0].content).to.be.a('string').to.not.be.a('null');
+        expect(res.body.data[0].date).to.be.a('string').to.not.be.a('null');
         done();
       });
   });
@@ -105,7 +107,7 @@ describe('/POST api/v1/entries', () => {
 describe('/POST api/v1/entries', () => {
   it('Create single diary entry', (done) => {
     const entry = {
-      content: 'Test entry 3',
+      content: 'Test entry 3'
     };
     chai
       .request(app)
@@ -114,10 +116,11 @@ describe('/POST api/v1/entries', () => {
       .send(entry)
       .end((err, res) => {
         id = res.body.data.id;
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(201);
         expect(res.body.data).to.have.property('userId');
         expect(res.body.message).to.equals('Created a new entry');
         expect(res.body.data.content).to.be.a('string').to.not.be.a('null');
+        expect(res.body.data.date).to.be.a('string').to.not.be.a('null');
         done();
       });
   });
@@ -131,9 +134,6 @@ describe('/GET api/v1/entries/', () => {
       .end((err, res) => {
         expect(res).to.have.status(200);
         // TODO: complete the test body;
-        // expect(res.body.data).to.have.property('userId');
-        // expect(res.body.message).to.equals('Entry');
-        // expect(res.body.data.content).to.be.a('string').to.not.be.a('null');
         done();
       });
   });
@@ -165,7 +165,7 @@ describe('/PUT api/v1/entries/:id', () => {
       .set({ Authorization: `Bearer ${token}` })
       .send(entry)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(201);
         expect(res.body.data).to.have.property('userId');
         expect(res.body.message).to.equals('Entry Updated');
         expect(res.body.data.content).to.be.a('string').to.not.be.a('null');

@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Entry.init({
     content: DataTypes.STRING,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    date: DataTypes.DATEONLY,
   }, {
     sequelize,
     modelName: 'Entry',

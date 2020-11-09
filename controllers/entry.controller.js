@@ -30,7 +30,7 @@ exports.createEntry = async (req, res, next) => {
       // eslint-disable-next-line no-return-assign
       req.body.forEach((obj) => (obj.userId = id));
       const bulkEntries = await Entry.bulkCreate(req.body);
-      res.statusCode = 200;
+      res.statusCode = 201;
       res.json({
         message: 'Created new entries',
         data: bulkEntries,
@@ -38,7 +38,7 @@ exports.createEntry = async (req, res, next) => {
     } else {
       req.body.userId = id;
       const entry = await Entry.create(req.body);
-      res.statusCode = 200;
+      res.statusCode = 201;
       res.json({
         message: 'Created a new entry',
         data: entry,
@@ -104,7 +104,7 @@ exports.updateEntry = async (req, res, next) => {
           { content: req.body.content },
           { where: { id: req.params.id } }
         );
-      res.statusCode = 200;
+      res.statusCode = 201;
       res.setHeader('Content-Type', 'application/json');
       res.json({
         message: 'Entry Updated',

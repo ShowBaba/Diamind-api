@@ -15,7 +15,7 @@ exports.signup = async (req, res, next) => {
     const hash = hashPassword(password);
     const user = await User.create({ email, password: hash });
     const { id } = user;
-    res.statusCode = 200;
+    res.statusCode = 201;
     res.setHeader('Content-Type', 'application/json');
     res.json({
       success: true,
