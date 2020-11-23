@@ -47,32 +47,4 @@ module.exports = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  /*
-  check(token).then((result) => {
-    // console.log(result)
-    if (result === null) {
-      jwt.verify(token, process.env.secretKey, { expiresIn: 3600 },
-        (err, decoded) => {
-          if (err) {
-            return res.status(401).send({
-              error: err
-            });
-          }
-          req.decoded = decoded;
-          User.findByPk(decoded.id)
-            .then((user) => {
-              if (!user) {
-                return res.status(401).send({
-                  error: 'User does not exist'
-                });
-              }
-              next();
-            });
-        });
-    } else {
-      return res.status(401).send({
-        error: 'User already logged out of session'
-      });
-    }
-  }).catch((err) => next(err)); */
 };
