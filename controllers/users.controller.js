@@ -44,7 +44,9 @@ exports.signin = async (req, res, next) => {
       });
     } else {
       res.statusCode = 400;
-      res.send('Invalide Email/Password');
+      res.send({
+        message: 'Invalide Email/Password'
+      });
     }
   } catch (error) {
     next(error);
