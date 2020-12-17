@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/ShowBaba/Diamind-api.svg?branch=main)](https://travis-ci.com/ShowBaba/Diamind-api)
+
 <a href="" target="_blank"><p align="center">
   <img src="public/images/write_64.png" alt="MyDiary App logo">
 </p></a>
