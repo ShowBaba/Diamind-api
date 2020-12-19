@@ -12,7 +12,7 @@ module.exports = {
   test: {
     // username: process.env.DB_USERNAME,
     // password: process.env.DB_PASSWORD,
-    use_env_variables: 'HEROKU_POSTGRESQL_AMBER',
+    use_env_variables: 'HEROKU_POSTGRESQL_AMBER_URL',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
