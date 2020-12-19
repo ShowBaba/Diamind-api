@@ -10,16 +10,11 @@ module.exports = {
     logging: false,
   },
   test: {
-    // username: process.env.DB_USERNAME,
-    // password: process.env.DB_PASSWORD,
-    use_env_variables: 'HEROKU_POSTGRESQL_AMBER',
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: 'mydiary-test',
+    use_env_variables: process.env.DB_CONNECTION_TEST,
     dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    },
     logging: false,
   },
   production: {
