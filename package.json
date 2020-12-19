@@ -6,7 +6,7 @@
     "lint": "eslint",
     "start": "nodemon ./bin/www",
     "test": "cross-env NODE_ENV=test mocha --timeout 10000 --exit",
-    "pretest": "cross-env NODE_ENV=test npx sequelize db:create --env test && sequelize db:migrate --env test"
+    "pretest": "cross-env NODE_ENV=test npx sequelize db:drop && sequelize db:create --env test && sequelize db:migrate --env test"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
