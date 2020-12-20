@@ -18,7 +18,10 @@ module.exports = {
     logging: false,
   },
   test: {
-    use_env_variable: 'HEROKU_POSTGRESQL_AMBER_URL',
+    username: 'japqvqwwaeonjy',
+    password: 'b9a73f74cb976bf8cb22c0b8a8d71a76ae75234803b9ae51429ad6461e4fbe75',
+    database: 'damp6r6scofjfn',
+    host: 'ec2-54-159-107-189.compute-1.amazonaws.com',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
