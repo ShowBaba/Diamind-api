@@ -5,4 +5,4 @@ cache:
   directories:
     - "node_modules"
 script:
-  - heroku run npm test
+  - heroku run npm test --app mydiaryprojectapi
