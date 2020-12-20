@@ -4,5 +4,7 @@ node_js:
 cache:
   directories:
     - "node_modules"
+before_script:
+    - heroku git:remote -a mydiaryprojectapi
 script:
-  - git remote add heroku https://git.heroku.com/mydiaryprojectapi.git && heroku run npm test --app mydiaryprojectapi
+  - heroku run npm test --app mydiaryprojectapi
