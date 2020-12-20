@@ -10,9 +10,7 @@ module.exports = {
     logging: false,
   },
   test: {
-    // username: process.env.DB_USERNAME,
-    // password: process.env.DB_PASSWORD,
-    use_env_variables: 'HEROKU_POSTGRESQL_AMBER_URL',
+    use_env_variable: 'HEROKU_POSTGRESQL_AMBER_URL',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
@@ -20,10 +18,10 @@ module.exports = {
         rejectUnauthorized: false
       }
     },
-    logging: false,
+    logging: false
   },
   production: {
-    use_env_variable: 'HEROKU_POSTGRESQL_AMBER_URL',
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
