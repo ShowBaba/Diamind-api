@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 // /* eslint-disable linebreak-style */
 // /* eslint-disable implicit-arrow-linebreak */
 // /* eslint-disable no-underscore-dangle */
@@ -8,7 +9,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const User = require('./models/user.model');
+const User = require('../db/models');
 
 dotenv.config();
 
