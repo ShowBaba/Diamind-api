@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint",
-    "start": "nodemon ./bin/www",
+    "start": "nodemon ./src/bin/www",
     "test": "cross-env NODE_ENV=test mocha --timeout 10000 --exit",
     "test:local": "cross-env NODE_ENV=test_local npx sequelize db:drop && sequelize db:create --env test_local && sequelize db:migrate --env test_local && mocha --timeout 10000 --exit"
   },
