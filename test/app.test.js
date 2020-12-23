@@ -73,6 +73,7 @@ describe('/POST api/v1/users/signin', () => {
         expect(res.body.success).to.equals(true);
         res.body.should.have.property('token');
         expect(res.body.message).to.equals('Login Succesfully');
+        console.log(`Token = ${token}\nREsponse = ${JSON.stringify(res.body)}`);
         done();
       });
   });
@@ -100,6 +101,7 @@ describe('/POST api/v1/entries', () => {
         expect(res.body.message).to.equals('Created new entries');
         expect(res.body.data[0].content).to.be.a('string').to.not.be.a('null');
         expect(res.body.data[0].date).to.be.a('string').to.not.be.a('null');
+        console.log(`Token = ${token}\nREsponse = ${JSON.stringify(res.body)}`);
         done();
       });
   });
@@ -121,6 +123,7 @@ describe('/POST api/v1/entries', () => {
         expect(res.body.message).to.equals('Created a new entry');
         expect(res.body.data.content).to.be.a('string').to.not.be.a('null');
         expect(res.body.data.date).to.be.a('string').to.not.be.a('null');
+        console.log(`Token = ${token}\nREsponse = ${JSON.stringify(res.body)}`);
         done();
       });
   });
