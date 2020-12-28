@@ -3,7 +3,6 @@ const { expect } = require('chai');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../src/app');
-const { User } = require('../src/db/models');
 const helper = require('./helper');
 
 // eslint-disable-next-line no-unused-vars
