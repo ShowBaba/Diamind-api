@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -6,9 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const passport = require('passport');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const config = require('./db/config/config');
 
 dotenv.config();
 
