@@ -21,11 +21,11 @@ exports.creatNewUser = (done) => new Promise((resolve, reject) => {
         .request(app)
         .post('/api/v1/users/signup')
         .send(user)
-        .end((err, res) => {
+        .end((err) => {
           if (err) done(err);
           chai
             .request(app)
-            .post('/api/v1/users/signin')
+            .post('/api/v1/users/login')
             .send(user)
             .end((err, res_) => {
               if (res_.body.token !== undefined) {

@@ -16,7 +16,7 @@ const user = {
 
 chai.use(chaiHttp);
 
-describe('/POST api/v1/users/signin', () => {
+describe('/POST api/v1/users/login', () => {
   before((done) => {
     helper.creatNewUser(done).then((token_) => {
       token = token_;

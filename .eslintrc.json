@@ -16,6 +16,7 @@
         "no-underscore-dangle":"off",
         "no-param-reassign":"off",
         "no-unused-vars":"warn",
-        "comma-dangle": "off"
+        "comma-dangle": "off",
+        "no-console":0
     }
 }

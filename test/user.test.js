@@ -40,7 +40,7 @@ describe('/POST api/v1/users/signup', () => {
   });
 });
 
-describe('/POST api/v1/users/signin', () => {
+describe('/POST api/v1/users/login', () => {
   it('Should login a user and return a token key', (done) => {
     const user = {
       email: 'test000@mail.com',
@@ -48,7 +48,7 @@ describe('/POST api/v1/users/signin', () => {
     };
     chai
       .request(app)
-      .post('/api/v1/users/signin')
+      .post('/api/v1/users/login')
       .send(user)
       .end((err, res) => {
         expect(res).to.have.status(200);

@@ -1,0 +1,9 @@
+exports.getEntries = require('./entry.controller').getEntries;
+exports.createEntry = require('./entry.controller').createEntry;
+exports.deleteAllEntries = require('./entry.controller').deleteAllEntries;
+exports.getEntryById = require('./entry.controller').getEntryById;
+exports.updateEntry = require('./entry.controller').updateEntry;
+exports.deleteOneEntry = require('./entry.controller').deleteOneEntry;
+exports.signup = require('./users.controller').signup;
+exports.login = require('./users.controller').login;
+exports.logout = require('./users.controller').logout;
